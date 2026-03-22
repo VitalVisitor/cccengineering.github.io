@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Renaissance — Clovis Community College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap">
+<style>
+:root{--deep:#273784;--sky:#2CB5DE;--lime:#98C741;--forest:#315C17;--mist:#ABE1E0;--teal:#55A8AA;--sage:#317259;--ink:#111318;--slate:#515151;--ash:#A6A6A6;--fog:#D9D9D9;--cream:#FAF9F7;--white:#FFF;--mist-bg:#E8F7F6}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);overflow-x:hidden;opacity:0;transition:opacity .3s}
+body.loaded{opacity:1}
+::selection{background:var(--sky);color:#fff}
+a{text-decoration:none;color:inherit}
+
+button{font-family:'DM Sans',sans-serif;cursor:pointer}
+.display{font-family:'Chakra Petch',sans-serif}
+
+.sharp{font-family:'Syne',sans-serif}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::-webkit-scrollbar{height:4px;width:4px}
+
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:2px}
+#cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:9997;background:radial-gradient(circle,rgba(44,181,222,.07) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+body:hover #cursor-glow{opacity:1}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes glow{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:1}100%{transform:scale(2.5);opacity:0}}
+@keyframes word-in{from{opacity:0;transform:translateY(100%) rotateX(-80deg)}to{opacity:1;transform:translateY(0) rotateX(0deg)}}
+.page{display:none;animation:fadeIn .5s ease}.page.active{display:block}
+nav{position:fixed;top:0;left:0;right:0;z-index:999;transition:all .6s cubic-bezier(.16,1,.3,1)}
+nav.solid{background:rgba(17,19,24,.92);backdrop-filter:blur(24px);border-bottom:1px solid rgba(44,181,222,.08)}
+
+.nav-inner{max-width:1300px;margin:0 auto;padding:0 40px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:height .5s}
+nav.solid .nav-inner{height:56px}
+.nav-logo{cursor:pointer;display:flex;align-items:center;gap:10px;transition:transform .3s}
+.nav-logo:hover{transform:scale(1.02)}
+.nav-logo-mark{width:36px;height:36px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000;transition:transform .3s}
+
+.nav-logo:hover .nav-logo-mark{transform:rotate(-5deg) scale(1.1)}
+.nav-logo-mark img{width:100%;height:100%;object-fit:contain}
+.nav-logo-text{font-size:15px;font-weight:700;color:#fff;letter-spacing:.02em;line-height:1.2}
+.nav-logo-sub{font-size:10px;font-weight:500;color:var(--lime);letter-spacing:.06em;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links button{background:none;border:none;padding:8px 16px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:all .3s;position:relative;overflow:hidden}
+.nav-links button::after{content:"";position:absolute;bottom:4px;left:16px;right:16px;height:2px;background:var(--sky);transform:scaleX(0);transition:transform .3s cubic-bezier(.16,1,.3,1);transform-origin:left;border-radius:1px}
+.nav-links button:hover{color:rgba(255,255,255,.8)}
+.nav-links button:hover::after{transform:scaleX(1)}
+.nav-links button.active{color:var(--sky);background:rgba(44,181,222,.1)}
+.nav-links button.active::after{transform:scaleX(1)}
+.hamburger{display:none;background:none;border:none;padding:6px;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--sky);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;background:rgba(17,19,24,.98);padding:8px 20px 24px;animation:fadeIn .2s}
+.mobile-menu.open{display:block}
+.mobile-menu button{display:block;width:100%;text-align:left;background:none;border:none;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:15px;color:rgba(255,255,255,.5);transition:color .2s}
+.mobile-menu button.active{font-weight:700;color:var(--sky)}
+.marquee-wrap{overflow:hidden;white-space:nowrap;padding:20px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+
+.marquee-wrap:hover .marquee-track{animation-play-state:paused}
+.marquee-track{display:inline-flex;animation:marquee var(--speed,30s) linear infinite}
+.marquee-track span{font-size:5rem;font-weight:700;padding-right:48px;letter-spacing:.02em;user-select:none;text-transform:uppercase}
+.marquee-wrap.light{border-color:var(--fog)}
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.hero-word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero-word span{display:inline-block;animation:word-in .8s cubic-bezier(.16,1,.3,1) both}
+.anim-line{height:1px;transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.anim-line.visible{transform:scaleX(1)}
+.glow{position:absolute;border-radius:50%;pointer-events:none}
+.btn{display:inline-block;padding:14px 30px;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:none;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.1);transform:translateX(-100%);transition:transform .4s}
+.btn:hover::before{transform:translateX(0)}
+.btn:hover{transform:translateY(-2px)}
+.btn-gradient{background:linear-gradient(135deg,var(--sky),var(--teal));color:#fff;box-shadow:0 4px 24px rgba(44,181,222,.3)}
+.btn-gradient:hover{box-shadow:0 8px 40px rgba(44,181,222,.5)}
+.btn-dark{background:var(--ink);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.btn-ghost:hover{border-color:var(--sky);color:var(--sky)}
+.btn-outline-lime{background:transparent;border:2px solid var(--lime);color:var(--lime)}
+.btn-outline-lime:hover{background:var(--lime);color:var(--ink)}
+.btn-outline-sky{background:transparent;border:2px solid var(--sky);color:var(--sky)}
+.btn-outline-sky:hover{background:var(--sky);color:var(--ink)}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.badge-lime{background:rgba(152,199,65,.1);border:1px solid rgba(152,199,65,.2);color:var(--lime)}
+.badge-sky{background:rgba(44,181,222,.1);border:1px solid rgba(44,181,222,.2);color:var(--sky)}
+.tag{display:inline-block;padding:5px 12px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:.02em;transition:all .3s}
+.scroll-row{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 40px;-webkit-overflow-scrolling:touch;cursor:grab}
+.scroll-row:active{cursor:grabbing}
+.scroll-card{min-width:340px;max-width:380px;flex-shrink:0;scroll-snap-align:start;padding:36px 28px 28px;position:relative;transition:transform .4s cubic-bezier(.16,1,.3,1);border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}
+.scroll-card:hover{transform:translateY(-6px)}
+.scroll-card .accent-top{position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0}
+.num{font-size:11px;font-weight:700;letter-spacing:.08em;min-width:40px;flex-shrink:0}
+.row-item-dark{padding:40px 0;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:36px;transition:all .4s}
+.row-item-dark:hover{padding-left:12px}
+
+.row-item{padding:40px 0;border-top:1px solid var(--fog);display:flex;gap:36px;transition:all .4s}
+.row-item:hover{padding-left:12px}
+.tier-row{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.06)}
+.tier-cell{flex:1;padding:40px 28px;border-right:1px solid rgba(255,255,255,.06);transition:background .3s}
+.tier-cell:last-child{border-right:none}
+.tier-cell:hover{background:rgba(255,255,255,.02)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+
+.grad-text{background:linear-gradient(135deg,var(--sky),var(--lime));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gradient-shift 4s ease infinite}
+/* Photo placeholders */
+.photo-slot{width:100%;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);position:relative}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-slot.light{background:var(--fog);border-color:var(--fog)}
+.photo-slot.light img{border-radius:10px}
+.photo-grid{display:grid;gap:12px}
+.photo-grid.g2{grid-template-columns:1fr 1fr}
+.photo-grid.g3{grid-template-columns:1fr 1fr 1fr}
+footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.04)}
+.footer-inner{max-width:1100px;margin:0 auto;padding:64px 40px 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.04);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:800px){
+  .nav-links{display:none!important}.hamburger{display:flex!important}.nav-inner{padding:0 16px}
+  .hero-title{font-size:3.2rem!important;line-height:1!important}
+  .big-heading{font-size:1.9rem!important}
+  .marquee-track span{font-size:3rem!important}
+  .hero-bottom{flex-direction:column!important;align-items:flex-start!important}
+  .hero-stats{flex-direction:column!important}
+  .hero-stats>div{border-right:none!important;border-bottom:1px solid rgba(255,255,255,.06)!important}
+  .scroll-row{padding:0 20px!important;gap:16px!important}
+
+  .scroll-card{min-width:300px!important}
+
+  .footer-grid{grid-template-columns:1fr!important;gap:32px!important}
+  .row-item,.row-item-dark{flex-direction:column!important;gap:12px!important}
+  .tier-row{flex-direction:column!important}
+  .tier-cell{border-right:none!important;border-bottom:1px solid rgba(255,255,255,.06)!important}
+  .split{grid-template-columns:1fr!important}
+  .photo-grid.g2,.photo-grid.g3{grid-template-columns:1fr!important}
+  section{padding-left:20px!important;padding-right:20px!important}
+  #cursor-glow{display:none}
+  .perf-split{grid-template-columns:1fr!important}
+  .perf-split>div:first-child{border-right:none!important;border-bottom:1px solid rgba(255,255,255,.06)!important;padding:32px 0!important}
+  .perf-split>div:last-child{padding:32px 0!important}
+  #exec-rows .exec-top{grid-template-columns:1fr!important}
+  #exec-rows .exec-bottom{grid-template-columns:1fr 1fr!important}
+}
+@media(min-width:801px){.hamburger{display:none!important}}
+</style>
+</head>
+
+<body>
+<div id="cursor-glow"></div>
+
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="go('home')">
+      <div class="nav-logo-mark"><img src="logo.png" alt="ER" onerror="this.parentElement.innerHTML='<span class=sharp style=font-size:13px;font-weight:800;color:#fff>ER</span>'"></div>
+
+      <div><div class="nav-logo-text sharp">ENGINEERING RENAISSANCE</div><div class="nav-logo-sub">Clovis Community College</div></div>
+    </div>
+    <div class="nav-links sharp" id="desktopNav"></div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+
+</nav>
+
+<!-- ═══════════════════ HOME ═══════════════════ -->
+<div class="page" id="page-home">
+  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;padding:0 40px 70px;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(44,181,222,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(44,181,222,.05) 1px,transparent 1px);background-size:72px 72px;pointer-events:none"></div>
+    <div class="glow" id="glow1" style="width:700px;height:700px;background:radial-gradient(circle,rgba(44,181,222,.25) 0%,transparent 55%);top:-15%;right:-8%;filter:blur(100px)"></div>
+    <div class="glow" id="glow2" style="width:500px;height:500px;background:radial-gradient(circle,rgba(152,199,65,.2) 0%,transparent 55%);bottom:0%;left:-8%;filter:blur(90px)"></div>
+    <div class="glow" style="width:300px;height:300px;background:radial-gradient(circle,rgba(171,225,224,.12) 0%,transparent 55%);top:45%;left:45%;filter:blur(60px);animation:float 6s ease infinite"></div>
+    <div style="position:relative;z-index:2;max-width:1300px;margin:0 auto;width:100%">
+      <div class="badge badge-lime sharp" style="margin-bottom:36px;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .2s both"><span style="width:6px;height:6px;border-radius:50%;background:var(--lime);display:inline-block;position:relative"><span style="position:absolute;inset:0;border-radius:50%;background:var(--lime);animation:pulse-ring 2s infinite"></span></span> Clovis Community College — STEM Club</div>
+      <h1 id="hero-text" class="hero-title display" style="font-size:6.8rem;font-weight:700;color:#fff;line-height:.9;letter-spacing:-.02em;margin-bottom:36px;max-width:900px;text-transform:uppercase;perspective:600px"></h1>
+
+      <div class="hero-bottom" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:32px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) 1.2s both">
+
+        <p style="font-size:16px;color:rgba(255,255,255,.4);line-height:1.75;max-width:440px">Promoting excellence and furthering STEM in the valley whilst showcasing Clovis Community College internationally.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-gradient" onclick="go('about')">About the Club</button>
+          <button class="btn btn-outline-lime" onclick="go('team')">Meet the Team</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(255,255,255,.06)">
+    <div class="hero-stats" style="max-width:900px;margin:0 auto;display:flex">
+      <div style="flex:1;text-align:center;padding:32px 20px;border-right:1px solid rgba(255,255,255,.06)"><div class="display" style="font-size:1.4rem;font-weight:700;color:#fff">STEM</div><div style="font-size:11px;color:var(--ash);text-transform:uppercase;letter-spacing:.08em;margin-top:6px">Excellence</div></div>
+      <div style="flex:1;text-align:center;padding:32px 20px;border-right:1px solid rgba(255,255,255,.06)"><div class="display" style="font-size:1.4rem;font-weight:700;color:#fff">CCC</div><div style="font-size:11px;color:var(--ash);text-transform:uppercase;letter-spacing:.08em;margin-top:6px">Fresno, CA</div></div>
+      <div style="flex:1;text-align:center;padding:32px 20px"><div class="display" style="font-size:1.4rem;font-weight:700;color:var(--lime)">🏆 2024</div><div style="font-size:11px;color:var(--ash);text-transform:uppercase;letter-spacing:.08em;margin-top:6px">World Champions</div></div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap" style="--speed:28s"><div class="marquee-track"><span class="display" style="color:rgba(44,181,222,.08)">Design</span><span class="display" style="color:rgba(44,181,222,.08)">Prototype</span><span class="display" style="color:rgba(44,181,222,.08)">Test</span><span class="display" style="color:rgba(44,181,222,.08)">Compete</span><span class="display" style="color:rgba(44,181,222,.08)">Innovate</span><span class="display" style="color:rgba(44,181,222,.08)">Collaborate</span><span class="display" style="color:rgba(44,181,222,.08)">Design</span><span class="display" style="color:rgba(44,181,222,.08)">Prototype</span><span class="display" style="color:rgba(44,181,222,.08)">Test</span><span class="display" style="color:rgba(44,181,222,.08)">Compete</span><span class="display" style="color:rgba(44,181,222,.08)">Innovate</span><span class="display" style="color:rgba(44,181,222,.08)">Collaborate</span></div></div>
+
+
+  <!-- About teaser -->
+  <section style="padding:120px 40px;background:var(--cream)">
+    <div style="max-width:1000px;margin:0 auto">
+
+      <div class="reveal">
+        <p class="sharp" style="font-size:2.4rem;font-weight:700;line-height:1.25;color:var(--ink);letter-spacing:-.02em">We're a student-run engineering club at Clovis Community College, focused on <span style="color:var(--sky)">hands-on technical experience</span> — from robotics competitions and rapid prototyping to embedded systems, computer vision, and <span style="color:var(--lime)">real-world problem solving</span>.</p>
+      </div>
+
+      <div class="anim-line" style="margin-top:40px;background:linear-gradient(90deg,var(--sky),var(--lime))"></div>
+      <div class="reveal" style="transition-delay:.2s;margin-top:24px"><button onclick="go('about')" class="sharp" style="background:none;border:none;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--deep)">Learn more about us →</button></div>
+    </div>
+  </section>
+
+  <!-- Photo break: team -->
+  <section style="padding:0 40px;background:var(--cream)">
+
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g3" style="margin-bottom:0">
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="home-team-1.jpg" alt="Team working" onerror="this.parentElement.style.display='none'"></div>
+
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="home-team-2.jpg" alt="Team building" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="home-team-3.jpg" alt="Team competing" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section style="padding:100px 40px;background:var(--ink)">
+
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2.4rem;font-weight:700;color:#fff;margin-bottom:48px;text-transform:uppercase">What we do</div></div>
+      <div id="home-values"></div>
+    </div>
+
+  </section>
+
+  <!-- Crush Depth teaser -->
+  <section style="padding:100px 40px;background:var(--mist-bg)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--lime);position:relative"><span style="position:absolute;inset:0;border-radius:50%;background:var(--lime);animation:pulse-ring 2.5s infinite"></span></div>
+        <span class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest)">Our Competition Team</span>
+      </div>
+      <div class="split">
+        <div class="reveal">
+          <h2 class="display" style="font-size:2.6rem;font-weight:700;color:var(--ink);line-height:1.05;margin-bottom:12px;text-transform:uppercase">Crush Depth</h2>
+          <p style="font-size:14px;color:var(--teal);font-weight:600;margin-bottom:16px">Our MATE ROV competition team</p>
+
+          <p style="font-size:15px;color:var(--slate);line-height:1.8;margin-bottom:28px">2024 MATE ROV Pioneer Class World Champions, Grover Award winners, and Oceaneering ROV Co-Pilot Award recipients. Now competing in the 2026 Explorer Class season.</p>
+          <button class="btn btn-dark" onclick="go('crushdepth')">Learn about Crush Depth →</button>
+        </div>
+        <div class="reveal" style="transition-delay:.15s">
+          <div style="background:linear-gradient(145deg,var(--ink),var(--deep));border-radius:12px;padding:48px 40px;position:relative;overflow:hidden">
+            <div class="glow" style="width:300px;height:300px;background:radial-gradient(circle,rgba(44,181,222,.4) 0%,transparent 55%);top:-30%;right:-15%;filter:blur(50px)"></div>
+            <div style="position:relative;z-index:2">
+              <div class="display" style="font-size:5rem;font-weight:700;color:var(--lime);line-height:1;margin-bottom:6px">1st</div>
+
+              <div style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:32px">2024 MATE ROV Pioneer World Championship</div>
+              <div style="width:100%;height:1px;background:linear-gradient(90deg,rgba(44,181,222,.4),transparent);margin-bottom:28px"></div>
+              <div class="display" style="font-size:2.2rem;font-weight:700;color:var(--sky);line-height:1;margin-bottom:6px;text-transform:uppercase">Explorer</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.5)">Competing 2026 Explorer season</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join CTA -->
+  <section style="padding:80px 40px;background:linear-gradient(135deg,var(--teal),var(--sky),var(--lime));background-size:200% 200%;animation:gradient-shift 6s ease infinite;text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="display" style="font-size:2rem;font-weight:700;color:var(--ink);margin-bottom:12px;text-transform:uppercase">Join Engineering Renaissance</div>
+      <p style="font-size:15px;color:rgba(0,0,0,.5);line-height:1.7;margin-bottom:24px">No experience required — just bring your curiosity and willingness to learn.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-dark" onclick="go('team')">Get Involved</button>
+        <button class="btn" style="background:rgba(0,0,0,.1);color:var(--ink);border:1px solid rgba(0,0,0,.15)" onclick="go('sponsors')">Become a Sponsor</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<div class="page" id="page-about">
+
+  <section style="padding:120px 40px 80px;background:var(--cream);border-bottom:1px solid var(--fog)">
+    <div style="max-width:1100px;margin:0 auto"><div class="reveal">
+      <div class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:24px">About Us</div>
+      <h1 class="display" style="font-size:4.5rem;font-weight:700;line-height:.98;color:var(--ink);max-width:800px;text-transform:uppercase">Engineering the <span class="grad-text">Future</span></h1>
+    </div></div>
+  </section>
+  <section style="padding:80px 40px;background:var(--white)">
+    <div style="max-width:900px;margin:0 auto"><div class="reveal">
+      <p style="font-size:1.15rem;line-height:1.9;color:var(--slate);columns:2 320px;column-gap:48px">Engineering Renaissance is a student-run engineering club at Clovis Community College, dedicated to promoting excellence in STEM and higher education. Our mission is to further STEM in the Central Valley and showcase Clovis Community College internationally. With our collaborative efforts, we continue to show that Crush has depth.<br><br>Our club brings together diverse disciplines — mechanical, electrical, software, and business — into one cohesive unit. Through competitions like MATE ROV, hands-on projects, and community outreach, members gain real-world experience with engineering concepts, CAD software, programming, and technical skills that prepare them for careers and transfer to four-year universities.</p>
+    </div></div>
+
+  </section>
+
+  <!-- Photo break -->
+  <section style="padding:20px 40px 0;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g2">
+        <div class="photo-slot light" style="aspect-ratio:16/10"><img src="about-workshop.jpg" alt="Workshop" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:16/10"><img src="about-group.jpg" alt="Group photo" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:100px 40px;background:var(--ink)">
+
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2.4rem;font-weight:700;color:#fff;margin-bottom:48px;text-transform:uppercase">What drives us</div></div>
+      <div id="about-values"></div>
+    </div>
+  </section>
+  <div class="marquee-wrap light" style="--speed:40s;background:var(--cream)"><div class="marquee-track"><span class="display" style="color:rgba(39,55,132,.06)">Crush has depth</span><span class="display" style="color:rgba(39,55,132,.06)">Clovis Community College</span><span class="display" style="color:rgba(39,55,132,.06)">Engineering Renaissance</span><span class="display" style="color:rgba(39,55,132,.06)">Crush has depth</span><span class="display" style="color:rgba(39,55,132,.06)">Clovis Community College</span><span class="display" style="color:rgba(39,55,132,.06)">Engineering Renaissance</span></div></div>
+</div>
+
+<!-- ═══════════════════ TEAM ═══════════════════ -->
+<div class="page" id="page-team">
+  <section style="padding:120px 40px 80px;background:var(--cream);border-bottom:1px solid var(--fog)">
+    <div style="max-width:1100px;margin:0 auto"><div class="reveal">
+
+      <div class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:24px">Our Team</div>
+      <h1 class="display" style="font-size:4.5rem;font-weight:700;line-height:.98;color:var(--ink);text-transform:uppercase">Multidisciplinary <span class="grad-text">Excellence</span></h1>
+      <p style="font-size:16px;color:var(--slate);line-height:1.8;max-width:580px;margin-top:20px">A diverse team of engineers, programmers, designers, and business professionals working together to build championship-level underwater robotics.</p>
+    </div></div>
+  </section>
+  <section style="padding:80px 0;background:var(--white)">
+    <div class="scroll-row" id="subteam-scroll"></div>
+    <div style="max-width:1100px;margin:16px auto 0;padding:0 40px;font-size:12px;color:var(--ash)">Scroll →</div>
+  </section>
+  <section style="padding:100px 40px;background:var(--ink)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal">
+
+        <div class="display" style="font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:8px;text-transform:uppercase">Executive <span style="color:var(--lime)">Board</span></div>
+        <p style="font-size:14px;color:rgba(255,255,255,.35);margin-bottom:48px">Meet the leadership team driving Engineering Renaissance forward</p>
+      </div>
+      <div id="exec-rows"></div>
+    </div>
+  </section>
+
+  <!-- Team in action photos -->
+  <section style="padding:80px 40px;background:var(--ink)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2rem;font-weight:700;color:#fff;margin-bottom:32px;text-transform:uppercase">Team in <span style="color:var(--lime)">Action</span></div></div>
+      <div class="reveal photo-grid g3" style="margin-bottom:12px">
+        <div class="photo-slot" style="aspect-ratio:4/3"><img src="action-1.jpg" alt="Electronics work" onerror="this.parentElement.style.display='none'"></div>
+
+        <div class="photo-slot" style="aspect-ratio:4/3"><img src="action-2.jpg" alt="Assembly" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot" style="aspect-ratio:4/3"><img src="action-3.jpg" alt="ROV testing" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+      <div class="reveal photo-grid g3">
+        <div class="photo-slot" style="aspect-ratio:4/3"><img src="action-4.jpg" alt="Collaboration" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot" style="aspect-ratio:4/3"><img src="action-5.jpg" alt="Fabrication" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot" style="aspect-ratio:4/3"><img src="action-6.jpg" alt="Competition" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:80px 40px;background:linear-gradient(135deg,var(--teal),var(--sky),var(--lime));background-size:200% 200%;animation:gradient-shift 6s ease infinite;text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="display" style="font-size:2rem;font-weight:700;color:var(--ink);margin-bottom:12px;text-transform:uppercase">Join Our Team</div>
+
+      <p style="font-size:15px;color:rgba(0,0,0,.5);line-height:1.7;margin-bottom:24px">No experience required — just bring your enthusiasm and willingness to learn!</p>
+      <button class="btn btn-dark">Get Involved</button>
+    </div>
+  </section>
+</div>
+
+
+<!-- ═══════════════════ PROJECTS ═══════════════════ -->
+<div class="page" id="page-projects">
+
+  <section style="padding:120px 40px 80px;background:var(--cream);border-bottom:1px solid var(--fog)">
+    <div style="max-width:1100px;margin:0 auto"><div class="reveal">
+      <div class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:24px">Projects</div>
+      <h1 class="display" style="font-size:4.5rem;font-weight:700;line-height:.98;color:var(--ink);text-transform:uppercase">Building <span class="grad-text">Together</span></h1>
+      <p style="font-size:16px;color:var(--slate);line-height:1.8;max-width:600px;margin-top:20px">Engineering isn't learned in a lecture hall — it's learned by building. Our project pipeline takes members from their first breadboard to competition-ready systems, with real deliverables at every stage.</p>
+    </div></div>
+
+  </section>
+
+  <!-- Intro Projects -->
+  <section style="padding:100px 40px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--sky);position:relative"><span style="position:absolute;inset:0;border-radius:50%;background:var(--sky);animation:pulse-ring 2.5s infinite"></span></div>
+        <span class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--deep)">Entry Point</span>
+      </div>
+      <div class="split reveal">
+        <div>
+          <h2 class="display" style="font-size:2.6rem;font-weight:700;color:var(--ink);line-height:1.05;margin-bottom:18px;text-transform:uppercase">Intro Projects</h2>
+          <p style="font-size:15px;color:var(--slate);line-height:1.85;margin-bottom:20px">The starting line for every new member. These initial group projects are designed to put a foot in the door of the world of actual engineering — no prior experience needed. You'll work alongside teammates on real hardware and real software from day one, building foundational skills that carry through every project after.</p>
+          <p style="font-size:14px;color:var(--ash);line-height:1.75;margin-bottom:24px">Members get introduced to embedded systems using Arduino and ESP32 microcontrollers — learning how to read sensors, drive motors, and write firmware that interacts with the physical world. On the design side, hands-on 3D modeling work with Onshape and SolidWorks teaches you to think spatially, design for manufacturing, and iterate fast.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="tag" style="border:1px solid rgba(44,181,222,.3);color:var(--sky)">Arduino</span>
+
+            <span class="tag" style="border:1px solid rgba(44,181,222,.3);color:var(--sky)">ESP32</span>
+            <span class="tag" style="border:1px solid rgba(152,199,65,.3);color:var(--lime)">Onshape</span>
+            <span class="tag" style="border:1px solid rgba(152,199,65,.3);color:var(--lime)">SolidWorks</span>
+            <span class="tag" style="border:1px solid rgba(171,225,224,.3);color:var(--mist)">Embedded Systems</span>
+            <span class="tag" style="border:1px solid rgba(171,225,224,.3);color:var(--mist)">3D Modeling</span>
+          </div>
+        </div>
+        <div>
+          <div class="photo-slot light" style="aspect-ratio:4/5;border-radius:12px"><img src="project-intro-1.jpg" alt="Intro project work" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:var(--ash);font-size:14px;text-align:center;padding:20px>Intro Projects<br>Photo</div>'"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Intro project photos -->
+  <section style="padding:0 40px 60px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g3">
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="project-intro-2.jpg" alt="Arduino wiring" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="project-intro-3.jpg" alt="CAD modeling" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="project-intro-4.jpg" alt="Group collaboration" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div style="max-width:1100px;margin:0 auto;padding:0 40px;background:var(--white)"><div class="anim-line" style="background:linear-gradient(90deg,var(--sky),var(--lime))"></div></div>
+
+  <!-- Halloween Projects -->
+  <section style="padding:100px 40px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--lime);position:relative"><span style="position:absolute;inset:0;border-radius:50%;background:var(--lime);animation:pulse-ring 2.5s infinite"></span></div>
+        <span class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest)">Leveling Up</span>
+      </div>
+      <div class="split reveal">
+        <div>
+          <div class="photo-slot light" style="aspect-ratio:4/5;border-radius:12px"><img src="project-halloween-1.jpg" alt="Halloween project" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:var(--ash);font-size:14px;text-align:center;padding:20px>Halloween Projects<br>Photo</div>'"></div>
+        </div>
+        <div>
+
+          <h2 class="display" style="font-size:2.6rem;font-weight:700;color:var(--ink);line-height:1.05;margin-bottom:18px;text-transform:uppercase">Halloween Projects</h2>
+          <p style="font-size:15px;color:var(--slate);line-height:1.85;margin-bottom:20px">Following up the intro group projects with a more technically intensive prompt — Halloween edition. These projects ramp up the complexity while keeping the energy high, giving members more exposure and hands-on opportunity with a fun, seasonal twist.</p>
+          <p style="font-size:14px;color:var(--ash);line-height:1.75;margin-bottom:24px">Think animatronics, sensor-triggered scare machines, LED-driven displays, sound-reactive installations — all built from scratch using the skills picked up in intro projects. It's the bridge between learning and ownership, where members start making real engineering decisions on their own.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="tag" style="border:1px solid rgba(44,181,222,.3);color:var(--sky)">Animatronics</span>
+            <span class="tag" style="border:1px solid rgba(152,199,65,.3);color:var(--lime)">Sensor Integration</span>
+            <span class="tag" style="border:1px solid rgba(171,225,224,.3);color:var(--mist)">LED Systems</span>
+            <span class="tag" style="border:1px solid rgba(85,168,170,.3);color:var(--teal)">Creative Engineering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Halloween project photos -->
+  <section style="padding:0 40px 60px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g2">
+        <div class="photo-slot light" style="aspect-ratio:16/10"><img src="project-halloween-2.jpg" alt="Halloween build" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:16/10"><img src="project-halloween-3.jpg" alt="Halloween demo" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- More projects coming -->
+
+  <section style="padding:100px 40px;background:var(--ink);text-align:center">
+    <div style="max-width:700px;margin:0 auto">
+      <div class="reveal">
+        <div class="display grad-text" style="font-size:2rem;font-weight:700;margin-bottom:16px;text-transform:uppercase">More Projects Coming</div>
+        <p style="font-size:15px;color:rgba(255,255,255,.4);line-height:1.8;margin-bottom:32px">Our project pipeline keeps growing. From competition vehicles to interdisciplinary collaborations, there's always something new being built. Check back or join the club to get in on the next one.</p>
+        <button class="btn btn-gradient" onclick="go('team')">Join the Team</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap" style="--speed:30s"><div class="marquee-track"><span class="display" style="color:rgba(152,199,65,.06)">Build</span><span class="display" style="color:rgba(152,199,65,.06)">Learn</span><span class="display" style="color:rgba(152,199,65,.06)">Create</span><span class="display" style="color:rgba(152,199,65,.06)">Iterate</span><span class="display" style="color:rgba(152,199,65,.06)">Ship</span><span class="display" style="color:rgba(152,199,65,.06)">Build</span><span class="display" style="color:rgba(152,199,65,.06)">Learn</span><span class="display" style="color:rgba(152,199,65,.06)">Create</span><span class="display" style="color:rgba(152,199,65,.06)">Iterate</span><span class="display" style="color:rgba(152,199,65,.06)">Ship</span></div></div>
+
+</div>
+
+<!-- ═══════════════════ CRUSH DEPTH ═══════════════════ -->
+<div class="page" id="page-crushdepth">
+  <section style="position:relative;padding:130px 40px 110px;overflow:hidden">
+    <div class="glow" style="width:600px;height:600px;background:radial-gradient(circle,rgba(44,181,222,.3) 0%,transparent 50%);top:-15%;right:-5%;filter:blur(100px)"></div>
+    <div class="glow" style="width:400px;height:400px;background:radial-gradient(circle,rgba(152,199,65,.2) 0%,transparent 50%);bottom:-5%;left:5%;filter:blur(80px)"></div>
+    <div style="max-width:1100px;margin:0 auto;position:relative;z-index:2"><div class="reveal">
+      <div class="badge badge-lime sharp" style="margin-bottom:32px"><span style="width:6px;height:6px;border-radius:50%;background:var(--lime);display:inline-block;position:relative"><span style="position:absolute;inset:0;border-radius:50%;background:var(--lime);animation:pulse-ring 2s infinite"></span></span> MATE ROV Competition Team</div>
+      <h1 class="display" style="font-size:5.5rem;font-weight:700;color:#fff;line-height:.92;margin-bottom:24px;max-width:700px;text-transform:uppercase">Crush<br><span class="grad-text">Depth.</span></h1>
+      <p style="font-size:17px;color:rgba(255,255,255,.4);line-height:1.7;max-width:520px">2024 World Champions, Grover Award and Oceaneering Co-Pilot Award winners. Now competing in the 2026 Explorer Class — designing, building, and operating underwater vehicles at the international level.</p>
+    </div></div>
+  </section>
+
+
+  <!-- Awards banner -->
+  <div style="background:linear-gradient(90deg,var(--lime),var(--sky));padding:14px 40px;display:flex;align-items:center;justify-content:center;background-size:200% 200%;animation:gradient-shift 3s ease infinite;gap:24px;flex-wrap:wrap">
+    <span class="sharp" style="font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.04em;text-transform:uppercase">🏆 2024 Pioneer World Champions</span>
+    <span style="width:4px;height:4px;border-radius:50%;background:var(--ink);opacity:.3"></span>
+    <span class="sharp" style="font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.04em;text-transform:uppercase">🎖 Grover Award</span>
+    <span style="width:4px;height:4px;border-radius:50%;background:var(--ink);opacity:.3"></span>
+    <span class="sharp" style="font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.04em;text-transform:uppercase">🏅 Oceaneering Co-Pilot Award</span>
+  </div>
+
+  <!-- Crush Depth logo + description -->
+  <section style="padding:100px 40px;background:var(--cream)">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="reveal split" style="gap:48px;align-items:flex-start">
+        <div>
+          <p class="sharp" style="font-size:2.2rem;font-weight:700;line-height:1.25;color:var(--ink);margin-bottom:28px">The MATE ROV Competition challenges student teams worldwide to design and build <span style="color:var(--sky)">underwater robots</span> that complete tasks modeled after real-world ocean scenarios.</p>
+          <p style="font-size:15px;color:var(--slate);line-height:1.85">From deep-sea exploration to marine archaeology, our ROV is engineered to tackle the most demanding underwater missions.</p>
+        </div>
+
+        <div style="display:flex;justify-content:center;align-items:flex-start">
+          <div class="photo-slot light" style="width:240px;aspect-ratio:1;border-radius:16px;background:transparent;border:none"><img src="crushdepth.png" alt="Crush Depth Logo" style="object-fit:contain" onerror="this.parentElement.style.display='none'"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROV photos -->
+  <section style="padding:0 40px 60px;background:var(--cream)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g2">
+        <div class="photo-slot light" style="aspect-ratio:16/10"><img src="rov-1.jpg" alt="ROV vehicle" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:16/10"><img src="rov-2.jpg" alt="ROV pool test" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:100px 40px;background:var(--white);border-top:1px solid var(--fog)">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2.2rem;font-weight:700;color:var(--ink);margin-bottom:48px;text-transform:uppercase">Our Journey</div></div>
+      <div id="timeline-rows"></div>
+    </div>
+  </section>
+
+  <!-- Competition photos -->
+  <section style="padding:0 40px 60px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g3">
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="competition-1.jpg" alt="At competition" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="competition-2.jpg" alt="Award ceremony" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="competition-3.jpg" alt="Team at event" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:100px 40px;background:var(--ink)">
+    <div style="max-width:1000px;margin:0 auto;text-align:center">
+      <div class="reveal">
+        <div class="display" style="font-size:2rem;font-weight:700;color:#fff;margin-bottom:12px;text-transform:uppercase">Technical Specifications</div>
+        <div class="display grad-text" style="font-size:1.5rem;font-weight:700;margin-bottom:12px;text-transform:uppercase">Coming Soon</div>
+        <p style="font-size:14px;color:rgba(255,255,255,.35);margin-bottom:28px">Stay tuned for our 2026 competition vehicle specs</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px">
+          <a href="#" class="btn btn-outline-sky">2026 Technical Docs</a>
+          <a href="#" class="btn btn-outline-sky">2025 Technical Docs</a>
+
+          <a href="#" class="btn btn-outline-lime">2024 Technical Docs</a>
+
+        </div>
+      </div>
+      <div class="reveal perf-split" style="display:grid;grid-template-columns:1fr 1fr;gap:0;text-align:left;border-top:1px solid rgba(255,255,255,.06)">
+        <div style="padding:40px 40px 40px 0;border-right:1px solid rgba(255,255,255,.06)">
+          <div class="sharp" style="font-size:18px;font-weight:700;color:#fff;margin-bottom:10px">Performance</div>
+          <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75">Built for speed, agility, and precise maneuvering. Our custom thruster configuration provides 6 degrees of freedom, allowing complex underwater operations with unmatched control.</p>
+        </div>
+
+        <div style="padding:40px 0 40px 40px">
+          <div class="sharp" style="font-size:18px;font-weight:700;color:#fff;margin-bottom:10px">Reliability</div>
+          <p style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75">Tested to withstand high-pressure environments and extreme conditions. Every component is carefully selected and stress-tested to ensure mission-critical reliability.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="marquee-wrap" style="--speed:35s"><div class="marquee-track"><span class="display" style="color:rgba(44,181,222,.06)">Crush Depth</span><span class="display" style="color:rgba(44,181,222,.06)">Pioneer Champions</span><span class="display" style="color:rgba(44,181,222,.06)">Explorer Class</span><span class="display" style="color:rgba(44,181,222,.06)">MATE ROV</span><span class="display" style="color:rgba(44,181,222,.06)">Crush Depth</span><span class="display" style="color:rgba(44,181,222,.06)">Pioneer Champions</span><span class="display" style="color:rgba(44,181,222,.06)">Explorer Class</span><span class="display" style="color:rgba(44,181,222,.06)">MATE ROV</span></div></div>
+</div>
+
+<!-- ═══════════════════ IMPACT ═══════════════════ -->
+<div class="page" id="page-impact">
+  <section style="padding:120px 40px 80px;background:var(--cream);border-bottom:1px solid var(--fog)">
+
+    <div style="max-width:1100px;margin:0 auto"><div class="reveal">
+      <div class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:24px">Impact</div>
+      <h1 class="display" style="font-size:4.5rem;font-weight:700;line-height:.98;color:var(--ink);text-transform:uppercase">Engineering for the <span class="grad-text">Valley</span></h1>
+      <p style="font-size:16px;color:var(--slate);line-height:1.8;max-width:640px;margin-top:20px">We believe engineering should reach beyond the lab. Through interdisciplinary collaborations and community partnerships, we're bringing hands-on STEM to the Central Valley — and building things that matter.</p>
+    </div></div>
+  </section>
+
+  <!-- Hero collaboration: EEG Prosthetic -->
+  <section style="padding:100px 40px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--lime);position:relative"><span style="position:absolute;inset:0;border-radius:50%;background:var(--lime);animation:pulse-ring 2.5s infinite"></span></div>
+        <span class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest)">Featured Collaboration</span>
+
+      </div>
+      <div class="split reveal">
+
+        <div>
+          <h2 class="display" style="font-size:2.6rem;font-weight:700;color:var(--ink);line-height:1.05;margin-bottom:12px;text-transform:uppercase">EEG-Controlled Prosthetic Hand</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+            <span class="badge badge-sky sharp">Engineering Renaissance</span>
+            <span class="badge badge-lime sharp">MEDLIFE Club</span>
+            <span class="badge" style="background:rgba(85,168,170,.1);border:1px solid rgba(85,168,170,.2);color:var(--teal)">MESA</span>
+          </div>
+
+          <p style="font-size:15px;color:var(--slate);line-height:1.85;margin-bottom:20px">An interdisciplinary project where biology and engineering majors collaborate to design and build a robotic prosthetic hand controlled by EEG brain signals — created for amputees in need. This partnership between Engineering Renaissance, the MEDLIFE Club, and MESA represents exactly what happens when disciplines converge on a problem that matters.</p>
+          <p style="font-size:14px;color:var(--ash);line-height:1.7">Engineering students handle the embedded systems, signal processing, and mechanical design. Biology and pre-med students from MEDLIFE bring the neuroscience and human factors expertise. MESA provides the framework for underrepresented students to participate in cutting-edge research.</p>
+        </div>
+        <div>
+          <div class="photo-slot light" style="aspect-ratio:4/5;border-radius:12px"><img src="eeg-prosthetic-1.jpg" alt="EEG prosthetic hand project" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:var(--ash);font-size:14px;text-align:center;padding:20px>EEG Prosthetic Hand<br>Project Photo</div>'"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- EEG project photos -->
+  <section style="padding:0 40px 60px;background:var(--white)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g3">
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="eeg-collab-1.jpg" alt="Cross-discipline collaboration" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="eeg-collab-2.jpg" alt="EEG signal testing" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot light" style="aspect-ratio:4/3"><img src="eeg-collab-3.jpg" alt="Prosthetic assembly" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Broader impact -->
+  <section style="padding:100px 40px;background:var(--ink)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2.4rem;font-weight:700;color:#fff;margin-bottom:20px;text-transform:uppercase">Promoting Engineering in the <span style="color:var(--lime)">Central Valley</span></div>
+
+      <p style="font-size:15px;color:rgba(255,255,255,.4);line-height:1.8;max-width:640px;margin-bottom:48px">Beyond competitions, we're committed to growing the engineering community in Fresno and the surrounding region — through education, demonstration, and direct collaboration with local organizations.</p></div>
+      <div id="impact-rows"></div>
+    </div>
+  </section>
+
+  <!-- Community photos -->
+  <section style="padding:60px 40px;background:var(--ink)">
+    <div style="max-width:1100px;margin:0 auto" class="reveal">
+      <div class="photo-grid g2">
+        <div class="photo-slot" style="aspect-ratio:16/10"><img src="community-1.jpg" alt="Community outreach" onerror="this.parentElement.style.display='none'"></div>
+        <div class="photo-slot" style="aspect-ratio:16/10"><img src="community-2.jpg" alt="STEM education event" onerror="this.parentElement.style.display='none'"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="marquee-wrap" style="--speed:35s"><div class="marquee-track"><span class="display" style="color:rgba(152,199,65,.06)">Impact</span><span class="display" style="color:rgba(152,199,65,.06)">Collaboration</span><span class="display" style="color:rgba(152,199,65,.06)">Central Valley</span><span class="display" style="color:rgba(152,199,65,.06)">STEM</span><span class="display" style="color:rgba(152,199,65,.06)">Impact</span><span class="display" style="color:rgba(152,199,65,.06)">Collaboration</span><span class="display" style="color:rgba(152,199,65,.06)">Central Valley</span><span class="display" style="color:rgba(152,199,65,.06)">STEM</span></div></div>
+</div>
+
+<!-- ═══════════════════ SPONSORS ═══════════════════ -->
+<div class="page" id="page-sponsors">
+  <section style="padding:120px 40px 80px;background:var(--cream);border-bottom:1px solid var(--fog)">
+    <div style="max-width:1100px;margin:0 auto"><div class="reveal">
+      <div class="sharp" style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:24px">Sponsors</div>
+      <h1 class="display" style="font-size:4.5rem;font-weight:700;line-height:.98;color:var(--ink);max-width:700px;text-transform:uppercase">Partner With <span class="grad-text">Innovation</span></h1>
+      <p style="font-size:16px;color:var(--slate);line-height:1.8;max-width:580px;margin-top:20px">Your support helps us push the boundaries of underwater robotics and provides valuable hands-on engineering experience to students at Clovis Community College.</p>
+    </div></div>
+
+  </section>
+  <section style="padding:100px 40px;background:var(--ink)">
+
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:48px;text-transform:uppercase">Why Sponsor</div></div>
+      <div id="sponsor-benefit-rows"></div>
+    </div>
+  </section>
+  <section style="padding:100px 40px;background:var(--white);border-top:1px solid var(--fog)">
+
+    <div style="max-width:900px;margin:0 auto">
+
+      <div class="reveal"><div class="display" style="font-size:2.2rem;font-weight:700;color:var(--ink);margin-bottom:8px;text-transform:uppercase">Our Sponsors</div><p style="font-size:14px;color:var(--slate);margin-bottom:48px">Thank you to our amazing partners who make our mission possible</p></div>
+      <div id="sponsor-tier-rows"></div>
+    </div>
+  </section>
+  <section style="padding:100px 40px;background:var(--ink)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="reveal"><div class="display" style="font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:48px;text-transform:uppercase;text-align:center">Sponsorship Tiers</div></div>
+      <div class="reveal tier-row" id="tier-columns"></div>
+    </div>
+  </section>
+  <section style="padding:80px 40px;background:linear-gradient(135deg,var(--teal),var(--sky),var(--lime));background-size:200% 200%;animation:gradient-shift 6s ease infinite;text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="display" style="font-size:2rem;font-weight:700;color:var(--ink);margin-bottom:12px;text-transform:uppercase">Become a Sponsor</div>
+      <p style="font-size:15px;color:rgba(0,0,0,.5);line-height:1.7;margin-bottom:24px">Help us compete at the highest level and inspire the next generation of engineers.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#" class="btn btn-dark">Contact Us</a>
+        <a href="sponsorship-packet.pdf" class="btn" style="background:rgba(0,0,0,.1);color:var(--ink);border:1px solid rgba(0,0,0,.15)" download>Download Sponsorship Packet</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <div class="nav-logo-mark" style="width:28px;height:28px;border-radius:5px"><img src="logo.png" alt="ER" style="width:100%;height:100%;object-fit:contain" onerror="this.parentElement.innerHTML='<span class=sharp style=font-size:10px;font-weight:700;color:#fff>ER</span>'"></div>
+          <span class="sharp" style="font-size:15px;font-weight:700;color:#fff">Engineering Renaissance</span>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,.3);line-height:1.7;max-width:300px">Clovis Community College's premier engineering club. Furthering STEM in the Valley, competing worldwide.</p>
+      </div>
+      <div><div class="sharp" style="font-size:10px;font-weight:700;color:rgba(255,255,255,.15);letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px">Navigate</div><div id="footer-nav"></div></div>
+      <div><div class="sharp" style="font-size:10px;font-weight:700;color:rgba(255,255,255,.15);letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px">Connect</div><div style="font-size:13px;color:var(--sky);margin-bottom:11px;font-weight:500">crushengineering.org</div><div style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:11px">Clovis Community College</div><div style="font-size:13px;color:rgba(255,255,255,.35)">10309 N. Willow Ave<br>Fresno, CA 93730</div></div>
+    </div>
+    <div class="footer-bottom">
+      <span style="font-size:11px;color:rgba(255,255,255,.15)">© 2025 Engineering Renaissance</span>
+      <span class="display" style="font-size:11px;font-weight:600;color:rgba(255,255,255,.08);letter-spacing:.06em;text-transform:uppercase">Crush has depth</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+const pages=['home','about','team','projects','crushdepth','impact','sponsors'];
+
+const pageLabels={home:'Home',about:'About',team:'Team',projects:'Projects',crushdepth:'Crush Depth',impact:'Impact',sponsors:'Sponsors'};
+let currentPage='home';
+
+const homeValues=[
+  {n:'01',title:'Competitions',text:'We compete nationally and internationally — from the MATE ROV Competition to MESA events and hackathons — putting our engineering to the test on the world stage.',c:'var(--sky)'},
+  {n:'02',title:'Subteams',text:'Mechanical, electrical, software, business, and media — find your niche or cross-train across disciplines. Every member contributes to something real.',c:'var(--lime)'},
+  {n:'03',title:'Real Skills',text:'SolidWorks, 3D printing, PCB design, Python, embedded systems, technical writing — hands-on experience that transfers directly to careers and university programs.',c:'var(--mist)'},
+  {n:'04',title:'Community',text:'Connect with like-minded students, build relationships that extend beyond the lab, and represent Clovis Community College on the global stage.',c:'var(--teal)'},
+  {n:'05',title:'Mentorship',text:'Learn from peers who have been through it. Upperclassmen and alumni help you level up faster, whether you are a first-semester student or preparing to transfer.',c:'var(--sky)'},
+  {n:'06',title:'Outreach',text:'We give back through K-12 STEM education, interdisciplinary collaborations, and community events — using our technology to make a real impact in the Central Valley.',c:'var(--lime)'},
+];
+
+const values=[
+  {n:'01',title:'Mission-Driven',text:'Competing at the highest level in the MATE ROV Competition, showcasing innovative underwater robotics solutions.',c:'var(--sky)'},
+
+  {n:'02',title:'Innovation First',text:'Developing cutting-edge ROV technology through hands-on engineering, problem-solving, and creative design.',c:'var(--lime)'},
+  {n:'03',title:'Team Synergy',text:'Bringing together diverse disciplines — mechanical, electrical, software, and business — into one cohesive unit.',c:'var(--mist)'},
+  {n:'04',title:'Competition Ready',text:'Designed to excel in real-world underwater challenges, from autonomous navigation to precision manipulation.',c:'var(--teal)'},
+];
+const timeline=[
+  {year:'2024',title:'Pioneer Class — 1st Place, World Championship',text:'In our debut year, Crush Depth won the 2024 MATE ROV World Championship in the Pioneer class, along with the prestigious Grover Award. Robert Voss was honored with the Oceaneering ROV Co-Pilot Award. Our team name represents the maximum depth a vessel can withstand.',c:'var(--lime)'},
+  {year:'2025',title:'Explorer Class — A Learning Experience',text:"Our first year in the Explorer class — the competition's most elite division. While we didn't take home a win, the experience was invaluable. We pushed our technical limits and gained critical knowledge for the road ahead.",c:'var(--sky)'},
+  {year:'2026',title:'Explorer Class — Back Stronger',text:'Armed with lessons from 2025, we return to the Explorer class with refined systems, deeper expertise, and an unwavering drive to compete at the highest level.',c:'var(--mist)'},
+];
+const impactRows=[
+
+  {n:'01',title:'Interdisciplinary Collaborations',text:'Partnering with clubs like MEDLIFE and programs like MESA to bridge engineering with biology, medicine, and community service — creating projects with real human impact.',c:'var(--sky)'},
+  {n:'02',title:'K-12 STEM Education',text:'Inspiring the next generation through robotics demonstrations, workshops, and mentorship programs at schools and community centers across the Central Valley.',c:'var(--lime)'},
+  {n:'03',title:'Representing the Valley',text:'Proving that world-class engineering talent comes from community colleges in the Central Valley — competing on the same stage as major universities and winning.',c:'var(--mist)'},
+
+  {n:'04',title:'Open Knowledge',text:'Sharing our technical documentation, design processes, and competition experience openly — so other teams and students can learn from our journey.',c:'var(--teal)'},
+];
+const subteamData=[
+  {title:'Mechanical',desc:'Design and fabrication of ROV structure and mechanical systems',tags:['Structural Design','CAD Modeling','Manufacturing'],c:'var(--lime)'},
+  {title:'Electrical & Software',desc:'Electronics, control systems, and autonomous navigation programming',tags:['Embedded Systems','Computer Vision','Control Algorithms'],c:'var(--sky)'},
+  {title:'Business',desc:'Fundraising, sponsorships, marketing, and competition logistics',tags:['Sponsorships','Outreach','Project Management'],c:'var(--teal)'},
+  {title:'Media',desc:'Documentation, photography, video production, and social media',tags:['Content Creation','Social Media','Documentation'],c:'var(--mist)'},
+];
+const execData=[
+  {name:'Daniel Larralde',role:'President',img:'daniel.png',desc:'Daniel oversees & leads Engineering Renaissance, ensuring success on all levels.'},
+  {name:'Julia Taylor',role:'Vice President / CSO',img:'julia.png',desc:'Julia organizes team workflows and supports communication across all teams.'},
+  {name:'Santino Gonzales',role:'Treasurer / CLO',img:'santino.png',desc:'Santino manages club finances and handles legal and compliance operations.'},
+  {name:'Luke Salazar',role:'Design Lead / Co-CEO',img:'luke.png',desc:'Luke leads mechanical design and co-directs overall engineering strategy.'},
+  {name:'Jack Jackson',role:'Electrical Lead / Co-CEO',img:'jack.png',desc:'Jack heads electrical systems and co-directs overall engineering strategy.'},
+  {name:'Justin Lu',role:'Programming Lead / Surface Side Lead',img:'justin.png',desc:'Justin leads software development, control systems, and surface-side operations.'},
+  {name:'Irery Huerta',role:'Marketing Lead',img:'irery.png',desc:'Irery drives brand strategy, content campaigns, and public-facing communications.'},
+  {name:'Emily Brenton',role:'CMO',img:'emily.png',desc:"Emily oversees all marketing operations and directs the club's outreach presence."},
+
+];
+const advisorData=[
+  {name:'Benjamin Bohan, M.S.',img:'benjamin.png',desc:'Club advisor providing guidance and institutional support for Engineering Renaissance.'},
+  {name:'Gurinder Khaira, M.S.',img:'gurinder.png',desc:'Club advisor supporting the team with mentorship and academic direction.'},
+];
+const sponsorBenefits=[
+  {n:'01',title:'Brand Visibility',text:'Logo placement on ROV, team apparel, and all marketing materials.',c:'var(--lime)'},
+  {n:'02',title:'Community Impact',text:'Support STEM education and inspire the next generation of engineers.',c:'var(--sky)'},
+  {n:'03',title:'Recognition',text:'Featured on our website, social media, and competition presentations.',c:'var(--mist)'},
+  {n:'04',title:'Partnership',text:'Direct engagement with talented engineering students and future workforce.',c:'var(--teal)'},
+];
+
+const sponsorTiersData=[
+  {label:'Platinum Partners',c:'rgba(255,255,255,.4)',sponsors:[{name:'Dassault Systèmes',img:'sponsor-dassault.png'},{name:'ASG',img:'sponsor-asg.png'}]},
+  {label:'Surface Sponsors',c:'var(--lime)',sponsors:[{name:'3D Printing Elves',img:'sponsor-3dprintingelves.png'},{name:'Forward Advantage Foundation',img:'sponsor-forwardadvantage.png'}]},
+  {label:'Proud Supporter',c:'var(--sky)',sponsors:[{name:'MESA',img:'sponsor-mesa.png'}]},
+
+];
+const tierData=[
+  {name:'Depth Donor',price:'$250+',c:'var(--sky)',items:['Updates & Invitations','Management Contact Info','Social Media Shoutout','Small Logo Placement']},
+  {name:'Crush Contributor',price:'$500+',c:'var(--lime)',items:['All Depth Donor benefits','Large Logo Placement','Member Resume Data Base']},
+  {name:'Surface Sponsor',price:'$1,000+',c:'#E8792B',items:['All Crush Contributor benefits','Organization Info Session @CCC','Logo at all events & meetings']},
+  {name:'Platinum Partner',price:'$2,000+',c:'var(--mist)',items:['All Surface Sponsor benefits','Logo on competition ROV','Project Naming Rights']},
+];
+
+function numberedRows(arr){
+  return arr.map((v,i)=>`
+    <div class="reveal row-item-dark" style="transition-delay:${i*.08}s">
+      <div class="num sharp" style="color:${v.c}">${v.n}</div>
+      <div style="flex:1">
+        <div class="sharp" style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">${v.title}</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.75">${v.text}</div>
+      </div>
+    </div>`).join('');
+
+}
+
+
+function personCard(e,i,large){
+  const sz=large?{img:'4/5',name:'18px',role:'13px',desc:'13px'}:{img:'4/5',name:'16px',role:'12px',desc:'12px'};
+  return `<div class="reveal" style="transition-delay:${i*.1}s">
+    <div style="width:100%;aspect-ratio:${sz.img};border-radius:8px;overflow:hidden;margin-bottom:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
+      <img src="${e.img}" alt="${e.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=font-size:${large?48:36}px;color:rgba(255,255,255,.08)>👤</span>'">
+    </div>
+    <div class="sharp" style="font-size:${sz.name};font-weight:700;color:#fff">${e.name}</div>
+    <div style="font-size:${sz.role};font-weight:600;color:var(--lime);margin-bottom:6px">${e.role||'Faculty Advisor'}</div>
+    <div style="font-size:${sz.desc};color:rgba(255,255,255,.4);line-height:1.6">${e.desc}</div>
+  </div>`;
+}
+
+function renderAll(){
+  document.getElementById('home-values').innerHTML=numberedRows(homeValues);
+  document.getElementById('about-values').innerHTML=numberedRows(values);
+  document.getElementById('impact-rows').innerHTML=numberedRows(impactRows);
+  document.getElementById('sponsor-benefit-rows').innerHTML=numberedRows(sponsorBenefits);
+
+  document.getElementById('timeline-rows').innerHTML=timeline.map((t,i)=>`
+
+    <div class="reveal row-item" style="transition-delay:${i*.1}s">
+      <div class="display" style="font-size:1.8rem;font-weight:700;color:${t.c};min-width:100px;flex-shrink:0">${t.year}</div>
+      <div><div style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px">${t.title}</div><div style="font-size:14px;color:var(--slate);line-height:1.75">${t.text}</div></div>
+
+    </div>`).join('');
+
+  document.getElementById('subteam-scroll').innerHTML=subteamData.map(s=>`
+    <div class="scroll-card"><div class="accent-top" style="background:${s.c}"></div>
+      <div class="sharp" style="font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px;margin-top:8px">${s.title}</div>
+      <div style="font-size:14px;color:var(--slate);line-height:1.7;margin-bottom:18px">${s.desc}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:auto">${s.tags.map(t=>`<span class="tag" style="border:1px solid ${s.c}30;color:${s.c}">${t}</span>`).join('')}</div>
+
+    </div>`).join('');
+
+  // Exec board: 2 top, 3+3 below, then advisors
+  document.getElementById('exec-rows').innerHTML=`
+    <div class="exec-top" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">${execData.slice(0,2).map((e,i)=>personCard(e,i,true)).join('')}</div>
+    <div class="exec-bottom" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px">${execData.slice(2,5).map((e,i)=>personCard(e,i+2,false)).join('')}</div>
+    <div class="exec-bottom" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">${execData.slice(5).map((e,i)=>personCard(e,i+5,false)).join('')}</div>
+    <div style="margin-top:64px;border-top:1px solid rgba(255,255,255,.06);padding-top:48px">
+
+      <div class="reveal"><div class="display" style="font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:8px;text-transform:uppercase">Club <span style="color:var(--sky)">Advisors</span></div>
+      <p style="font-size:14px;color:rgba(255,255,255,.35);margin-bottom:32px">Faculty mentors guiding Engineering Renaissance</p></div>
+      <div class="exec-top" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:600px">${advisorData.map((a,i)=>{a.role='Faculty Advisor';return personCard(a,i+8,false)}).join('')}</div>
+    </div>`;
+
+
+  document.getElementById('sponsor-tier-rows').innerHTML=sponsorTiersData.map(t=>`
+    <div class="reveal" style="margin-bottom:48px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px"><div style="flex:1;height:1px;background:${t.c}"></div><div class="sharp" style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${t.c}">${t.label}</div><div style="flex:1;height:1px;background:${t.c}"></div></div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center">${t.sponsors.map(s=>`
+        <div style="padding:24px 32px;border:1px solid var(--fog);border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:12px;min-width:200px;background:var(--white)">
+          <div style="height:64px;display:flex;align-items:center;justify-content:center">
+            <img src="${s.img}" alt="${s.name}" style="max-height:64px;max-width:180px;object-fit:contain" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=display style=font-size:20px;font-weight:700;color:var(--ink)>${s.name}</span>'">
+          </div>
+          <div style="font-size:13px;color:var(--slate);font-weight:500;text-align:center">${s.name}</div>
+        </div>`).join('')}
+      </div>
+    </div>`).join('');
+
+
+  document.getElementById('tier-columns').innerHTML=tierData.map(t=>`
+    <div class="tier-cell" style="border-top:3px solid ${t.c}">
+
+      <div class="sharp" style="font-size:12px;font-weight:700;color:${t.c};letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">${t.name}</div>
+      <div class="display" style="font-size:2rem;font-weight:700;color:#fff;margin-bottom:20px">${t.price}</div>
+      ${t.items.map(it=>`<div style="font-size:13px;color:rgba(255,255,255,.4);padding:6px 0;display:flex;align-items:center;gap:8px"><span style="width:5px;height:5px;border-radius:50%;background:${t.c};flex-shrink:0"></span>${it}</div>`).join('')}
+    </div>`).join('');
+
+  ['desktopNav','mobileMenu','footer-nav'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(id==='footer-nav') el.innerHTML=pages.map(p=>`<div style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:11px;cursor:pointer" onclick="go('${p}')">${pageLabels[p]}</div>`).join('');
+    else el.innerHTML=pages.map(p=>`<button class="${p===currentPage?'active':''}" onclick="go('${p}')">${pageLabels[p]}</button>`).join('');
+  });
+}
+
+
+function animateHero(){
+  const el=document.getElementById('hero-text');if(!el)return;
+  let html='';
+  'Engineering'.split('').forEach((ch,i)=>{html+=`<span class="hero-word"><span style="animation-delay:${.3+i*.04}s">${ch}</span></span>`});
+  html+='<br>';
+  'Renaissance'.split('').forEach((ch,i)=>{html+=`<span class="hero-word"><span class="grad-text" style="animation-delay:${.6+i*.04}s">${ch}</span></span>`});
+  el.innerHTML=html;
+}
+
+function go(page){
+  currentPage=page;
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+
+  window.scrollTo({top:0});
+  document.getElementById('mobileMenu').classList.remove('open');
+  renderAll();
+  if(page==='home')animateHero();
+  setTimeout(()=>{observeReveals();observeLines()},60);
+  updateNav();
+}
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open')}
+function updateNav(){const nav=document.getElementById('navbar');if(window.scrollY>60||currentPage!=='home')nav.classList.add('solid');else nav.classList.remove('solid')}
+function observeReveals(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el))}
+function observeLines(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.5});document.querySelectorAll('.anim-line:not(.visible)').forEach(el=>obs.observe(el))}
+document.addEventListener('mousemove',e=>{const g=document.getElementById('cursor-glow');if(g){g.style.left=e.clientX+'px';g.style.top=e.clientY+'px'}});
+window.addEventListener('scroll',()=>{updateNav();const s=window.scrollY;const g1=document.getElementById('glow1');const g2=document.getElementById('glow2');if(g1)g1.style.transform=`translate(${s*.02}px,${s*.04}px)`;if(g2)g2.style.transform=`translate(${-s*.03}px,${-s*.02}px)`});
+document.querySelectorAll('.scroll-row').forEach(row=>{let isDown=false,startX,scrollLeft;row.addEventListener('mousedown',e=>{isDown=true;startX=e.pageX-row.offsetLeft;scrollLeft=row.scrollLeft;row.style.cursor='grabbing'});row.addEventListener('mouseleave',()=>{isDown=false;row.style.cursor='grab'});row.addEventListener('mouseup',()=>{isDown=false;row.style.cursor='grab'});row.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-row.offsetLeft;row.scrollLeft=scrollLeft-(x-startX)*1.5})});
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(()=>{document.body.classList.add('loaded');go('home')})}
+else{window.addEventListener('load',()=>{document.body.classList.add('loaded');go('home')})}
+</script>
+</body>
+</html>
